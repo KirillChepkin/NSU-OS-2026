@@ -9,12 +9,23 @@ extern char *tzname[];
 int main() {
     time_t now;
     struct tm *sp;
-    (void) time(&now);
+    time_t ret;
+    int pret;
+    ret = time(&now);
+    if (ret == -1) {
+        exit(0);
+    }
     sp = localtime(&now);
-    printf("%s", ctime( &now ) );
-    printf("%d/%d/%02d %d:%02d %s\n",
+    pret = printf("%s", ctime( &now ) );
+    if (pret == -1) {
+        exit(0);
+    }
+    pret = printf("%d/%d/%02d %d:%02d %s\n",
                                     sp -> tm_mon + 1, sp -> tm_mday,
                                     sp -> tm_year + 1900, sp -> tm_hour,
                                     sp -> tm_min, tzname[sp -> tm_isdst]);
+    if (pret == -1) {
+        exit(0);
+    }
     exit(0);
 }
