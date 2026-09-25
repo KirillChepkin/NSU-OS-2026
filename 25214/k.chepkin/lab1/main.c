@@ -4,6 +4,7 @@
 #include <ulimit.h>
 #include <string.h>
 #include <errno.h>
+#include <sys/resource.h>
 
 #define MAX_PATH 8192
 
@@ -77,7 +78,7 @@ int main(int argc, char* argv[], char* envp[]) {
             }
             case 'u': {
                 int ret;
-                struct rlimit limits = {};
+                struct rlimit limits;
                 ret = getrlimit(UL_GETFSIZE, &limits);
                 if (ret != 0 ) {
                     fprintf(stderr, "failed to get UL_GETFSIZE\n");
@@ -90,7 +91,7 @@ int main(int argc, char* argv[], char* envp[]) {
             case 'U': {
                 long long limit;
                 int ret;
-                struct rlimit limits = {};
+                struct rlimit limits;
                 char* endptr = NULL;
                 if (optarg == NULL) {
                     fprintf(stderr, "Incorrect option. Expected: [-Uulimit]\n");
@@ -121,7 +122,7 @@ int main(int argc, char* argv[], char* envp[]) {
             }
             case 'c': {
                 int ret;
-                struct rlimit limits = {};
+                struct rlimit limits;
                 ret = getrlimit(RLIMIT_CORE, &limits);
                 if (ret != 0) {
                     fprintf(stderr, "Failed to retrieve core file size limits\n");
@@ -133,7 +134,7 @@ int main(int argc, char* argv[], char* envp[]) {
                 break;
             }
             case 'C': {
-                struct rlimit limits = {};
+                struct rlimit limits;
                 long long size;
                 int ret;
                 char* endptr;
