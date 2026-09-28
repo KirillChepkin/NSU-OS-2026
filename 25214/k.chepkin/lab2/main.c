@@ -20,7 +20,7 @@ int main() {
         exit(1);
     }
     sp = localtime(&now);
-    if (pret == -1) {
+    if (sp == NULL) {
         exit(1);
     }
     pret = printf("%d/%d/%02d %d:%02d %s\n",
