@@ -20,7 +20,6 @@ int main() {
         exit(1);
     }
     sp = localtime(&now);
-    pret = printf("%s", ctime( &now ) );
     if (pret == -1) {
         exit(1);
     }
