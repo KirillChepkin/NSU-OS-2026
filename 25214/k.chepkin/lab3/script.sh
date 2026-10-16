@@ -1,4 +1,4 @@
-gcc -Wall -Wextra -fsanitize=address main.c -o prog
+gcc -Wall -Wextra main.c -o prog
 chmod g+s prog
 # ls -l | grep prog
 ./prog
