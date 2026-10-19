@@ -44,7 +44,6 @@ int main() {
     ret = setuid(getuid());
     if (ret == -1) {
         perror("Error when setting the effective user ID equal to user id:");
-        perror(strerror(errno));
         exit(1);
     }
 
