@@ -37,14 +37,10 @@ static inline int open_file() {
 int main() {
     print_id();
     int ret = open_file();
-    if (ret == -1) {
-        exit(1);
-    }
 
     ret = setuid(getuid());
     if (ret == -1) {
         perror("Error when setting the effective user ID equal to user id:");
-        exit(1);
     }
 
     print_id();
