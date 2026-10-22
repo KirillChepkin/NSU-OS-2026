@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 int main() {
     char* args[] = {"sh", "-c", "cat file.txt", NULL};
@@ -18,7 +19,7 @@ int main() {
         exit(1);
     }
     else {
-        siginfo_t info = {};
+        siginfo_t info;
         int ret = waitid(P_PID, pid, &info, WEXITED);
         if (ret == -1) {
             perror("wait call failed");
