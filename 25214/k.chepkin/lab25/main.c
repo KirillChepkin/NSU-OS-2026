@@ -8,6 +8,15 @@
 #define TOSTRING(x) STRINGIFY(x)
 #define N 100
 
+#include <ctype.h>
+
+char* to_uppercase(char *array, int length) {
+    for (int i = 0; i < length; i++) {
+        array[i] = (char)toupper((unsigned char)array[i]);
+    }
+    return array;
+}
+
 int main() {
     int descriptors[2];
     int ret = pipe(descriptors);
@@ -82,7 +91,10 @@ int main() {
         }
 
 
-        ret = printf("Message: \"%." TOSTRING(N) "s\", length: %lu\n", buffer, strnlen(buffer, N));
+        ret = printf(
+                "Message: \"%." TOSTRING(N) "s\", length of data: %lu\n",
+                to_uppercase(buffer, strnlen(buffer, N)),
+                strnlen(buffer, N) + 1);
         if (ret == -1) {
             perror("Failed to print message obtained from the pipe");
             exit(1);
