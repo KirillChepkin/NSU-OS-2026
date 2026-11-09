@@ -29,7 +29,7 @@ int main(int argc, char** argv) {
         if (WIFEXITED(stat_loc) > 0) {
             ret = printf("Exit status: %d\n", WEXITSTATUS(stat_loc));
         }
-        if (ret != 0) {
+        if (ret < 0) {
             perror("Failed to print");
             exit(1);
         }
