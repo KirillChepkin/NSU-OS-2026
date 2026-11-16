@@ -57,7 +57,6 @@ int main() {
             perror("Closing the pipe write descriptor failed");
             exit(1);
         }
-        _exit(0);
     }
     else if (pid == -1) {
         perror("Fork failed");
