@@ -42,7 +42,7 @@ int main() {
         int bytes_to_write = strnlen(string, N) + 1;
         int bytes_written = 0;
         do {
-            bytes_written = write(descriptors[1], offset, strnlen(string, N) + 1);
+            bytes_written = write(descriptors[1], offset, bytes_to_write);
             if (bytes_written == -1) {
                 perror("Write to the pipe failed");
                 exit(1);
@@ -70,15 +70,8 @@ int main() {
         }
 
 
-        char buffer[N] = {};
+        char buffer[N] = {0};
         char* offset = buffer;
-        // ret = waitpid(-1, NULL, 0);
-        if (ret == -1) {
-            perror("waitpid failed");
-            exit(1);
-        }
-
-
         int bytes_obtained = 0;
         int left_to_read = N;
         do {
@@ -91,7 +84,6 @@ int main() {
             left_to_read -= bytes_obtained;
         } while (bytes_obtained != 0 && left_to_read > 0);
 
-
         ret = printf(
                 "Message: \"%." TOSTRING(N) "s\", length of data: %lu\n",
                 to_uppercase(buffer, strnlen(buffer, N)),
@@ -100,7 +92,6 @@ int main() {
             perror("Failed to print message obtained from the pipe");
             exit(1);
         }
-
 
         ret = close(descriptors[0]);
         if (ret == -1) {
