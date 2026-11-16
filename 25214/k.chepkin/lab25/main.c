@@ -57,9 +57,12 @@ int main() {
             perror("Closing the pipe write descriptor failed");
             exit(1);
         }
+        _exit(0);
     }
     else if (pid == -1) {
         perror("Fork failed");
+        close(descriptors[0]);
+        close(descriptors[1]);
         exit(1);
     }
     else {
@@ -85,7 +88,7 @@ int main() {
         } while (bytes_obtained != 0 && left_to_read > 0);
 
         ret = printf(
-                "Message: \"%." TOSTRING(N) "s\", length of data: %lu\n",
+                "Message: \"%." TOSTRING(N) "s\", length of data: %zu\n",
                 to_uppercase(buffer, strnlen(buffer, N)),
                 strnlen(buffer, N) + 1);
         if (ret == -1) {
