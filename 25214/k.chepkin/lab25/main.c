@@ -15,7 +15,7 @@ char* to_uppercase(char *array, int length) {
         array[i] = (char)toupper((unsigned char)array[i]);
     }
     return array;
-}
+} 
 
 int main() {
     int descriptors[2];
