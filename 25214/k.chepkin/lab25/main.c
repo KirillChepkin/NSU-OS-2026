@@ -13,7 +13,7 @@
 char* to_uppercase(char *array, int length) {
     for (int i = 0; i < length; i++) {
         array[i] = (char)toupper((unsigned char)array[i]);
-    }
+    } 
     return array;
 }
 
