@@ -3,6 +3,8 @@
 #include <string.h>
 #include <sys/wait.h>
 #include <stdlib.h>
+#define N 100
+
 #include <ctype.h>
 
 char* to_uppercase(char *array, int length) {
