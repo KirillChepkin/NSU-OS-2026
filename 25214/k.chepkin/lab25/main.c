@@ -75,25 +75,34 @@ int main() {
         char buffer[N] = {0};
         char* offset = buffer;
         int bytes_obtained = 0;
-        int left_to_read = N;
+        int chunk_size = N;
         do {
-            bytes_obtained = read(descriptors[0], offset, left_to_read);
+            bytes_obtained = read(descriptors[0], offset, chunk_size);
             if (bytes_obtained == -1) {
                 perror("Error when reading from the pipe");
                 exit(1);
             }
-            offset += bytes_obtained;
-            left_to_read -= bytes_obtained;
-        } while (bytes_obtained != 0 && left_to_read > 0);
+            ret = fwrite(offset, 1, bytes_obtained, stdout);
+            if (ret == -1) {
+                perror("Failed to write data to stdout\n");
+                exit(1);
+            }
+        } while (bytes_obtained != 0);
 
-        ret = printf(
-                "Message: \"%." TOSTRING(N) "s\", length of data: %zu\n",
-                to_uppercase(buffer, strnlen(buffer, N)),
-                strnlen(buffer, N) + 1);
+        ret = printf("\n");
         if (ret == -1) {
-            perror("Failed to print message obtained from the pipe");
+            perror("Failed to print newline\n");
             exit(1);
         }
+
+        // ret = printf(
+        //         "Message: \"%." TOSTRING(N) "s\", length of data: %zu\n",
+        //         to_uppercase(buffer, strnlen(buffer, N)),
+        //         strnlen(buffer, N) + 1);
+        // if (ret == -1) {
+        //     perror("Failed to print message obtained from the pipe");
+        //     exit(1);
+        // }
 
         ret = close(descriptors[0]);
         if (ret == -1) {
