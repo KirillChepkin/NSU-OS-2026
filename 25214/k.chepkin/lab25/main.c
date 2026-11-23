@@ -82,6 +82,7 @@ int main() {
                 perror("Error when reading from the pipe");
                 exit(1);
             }
+            to_uppercase(offset, bytes_obtained);
             ret = fwrite(offset, 1, bytes_obtained, stdout);
             if (ret == -1) {
                 perror("Failed to write data to stdout\n");
