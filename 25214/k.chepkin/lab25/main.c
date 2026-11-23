@@ -96,15 +96,6 @@ int main() {
             exit(1);
         }
 
-        // ret = printf(
-        //         "Message: \"%." TOSTRING(N) "s\", length of data: %zu\n",
-        //         to_uppercase(buffer, strnlen(buffer, N)),
-        //         strnlen(buffer, N) + 1);
-        // if (ret == -1) {
-        //     perror("Failed to print message obtained from the pipe");
-        //     exit(1);
-        // }
-
         ret = close(descriptors[0]);
         if (ret == -1) {
             perror("Closing the pipe read descriptor failed");
